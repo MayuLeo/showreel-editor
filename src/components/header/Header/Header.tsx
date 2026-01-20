@@ -5,8 +5,8 @@ import type { HeaderProps } from './type';
 
 export function Header({ showreelInfo, onNameChange }: HeaderProps) {
   return (
-    <header className="border-b bg-background">
-      <div className="container mx-auto px-4 py-4">
+    <header className="border-b bg-background shrink-0">
+      <div className="px-4 py-4">
         <div className="flex flex-col gap-4">
           {/* ショーリール名編集エリア */}
           <HeaderBar name={showreelInfo.name} onNameChange={onNameChange} />
