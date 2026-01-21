@@ -53,7 +53,7 @@ export function HeaderBar({ name, onNameChange }: HeaderBarProps) {
                 variant="outline"
                 onClick={() => setIsEditing(true)}
               >
-                ファイル名を変更
+                リール名を変更
               </Button>
             </>
           )}

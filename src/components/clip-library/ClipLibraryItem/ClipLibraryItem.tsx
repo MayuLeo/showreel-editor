@@ -39,6 +39,7 @@ export function ClipLibraryItem({
     <div
       ref={setNodeRef}
       style={style}
+      data-slot="clip-library-item"
       className={cn(
         'rounded-md border bg-background p-3 transition-colors',
         isDragging && 'opacity-0 pointer-events-none',
