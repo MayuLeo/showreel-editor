@@ -84,21 +84,3 @@ export function formatDuration(duration: Duration): string {
 
   return `${pad(duration.hours)}:${pad(duration.minutes)}:${pad(duration.seconds)}:${pad(duration.frames)}`;
 }
-
-/**
- * 秒とフレームからDurationオブジェクトを作成
- * @param totalSeconds - 総秒数
- * @param frameRate - フレームレート（デフォルト25）
- * @returns Durationオブジェクト
- */
-export function createDuration(
-  totalSeconds: number,
-  frameRate: number = 25
-): Duration {
-  const hours = Math.floor(totalSeconds / 3600);
-  const minutes = Math.floor((totalSeconds % 3600) / 60);
-  const seconds = Math.floor(totalSeconds % 60);
-  const frames = Math.round((totalSeconds % 1) * frameRate);
-
-  return { hours, minutes, seconds, frames };
-}

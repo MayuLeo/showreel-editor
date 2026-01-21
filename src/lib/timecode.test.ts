@@ -3,7 +3,6 @@ import type { Duration } from '@/types/showreel';
 import { describe, expect, test } from 'bun:test';
 import {
   clipDurationFrames,
-  createDuration,
   formatDuration,
   framesToDuration,
   getFrameRate,
@@ -116,43 +115,6 @@ describe('formatDuration', () => {
       frames: 23,
     };
     expect(formatDuration(duration)).toBe('12:34:56:23');
-  });
-});
-
-describe('createDuration', () => {
-  test('総秒数からDurationを作成する（25fps）', () => {
-    const duration = createDuration(90.5, 25);
-    expect(duration).toEqual({ hours: 0, minutes: 1, seconds: 30, frames: 13 });
-  });
-
-  test('時間を含むDurationを作成する（30fps）', () => {
-    const duration = createDuration(3665.5, 30);
-    expect(duration).toEqual({ hours: 1, minutes: 1, seconds: 5, frames: 15 });
-  });
-
-  test('小数点以下の秒数をフレームに変換する（25fps）', () => {
-    // 浮動小数点数の精度問題を回避するため、0.2秒ではなく0.2相当のフレーム数(5/25=0.2)を指定
-    const duration = createDuration(10 + 5 / 25, 25);
-    expect(duration).toEqual({ hours: 0, minutes: 0, seconds: 10, frames: 5 });
-  });
-
-  test('フレームレート未指定時はデフォルト25fpsを使用する', () => {
-    const duration = createDuration(90.5);
-    expect(duration).toEqual({ hours: 0, minutes: 1, seconds: 30, frames: 13 });
-  });
-
-  test('0秒からすべて0のDurationを作成する', () => {
-    const duration = createDuration(0, 25);
-    expect(duration).toEqual({ hours: 0, minutes: 0, seconds: 0, frames: 0 });
-  });
-
-  test('負の秒数は負のDuration値を返す（未定義動作）', () => {
-    const duration = createDuration(-10, 25);
-    // 実装上、負の秒数は負のhours/minutes/secondsを生成する
-    // この挙動が意図的かどうかを明示するためのテスト
-    expect(duration.hours <= 0).toBe(true);
-    expect(duration.minutes <= 0).toBe(true);
-    expect(duration.seconds <= 0).toBe(true);
   });
 });
 
