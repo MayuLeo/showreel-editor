@@ -15,12 +15,16 @@ export function FormatSummary({ format }: FormatSummaryProps) {
       <div className="text-sm font-medium text-muted-foreground">
         フォーマット:
       </div>
-      <Badge variant={getStandardVariant(format.standard)}>
-        {format.standard}
-      </Badge>
-      <Badge variant={getResolutionVariant(format.resolution)}>
-        {format.resolution}
-      </Badge>
+      {format && (
+        <>
+          <Badge variant={getStandardVariant(format.standard)}>
+            {format.standard}
+          </Badge>
+          <Badge variant={getResolutionVariant(format.resolution)}>
+            {format.resolution}
+          </Badge>
+        </>
+      )}
     </div>
   );
 }

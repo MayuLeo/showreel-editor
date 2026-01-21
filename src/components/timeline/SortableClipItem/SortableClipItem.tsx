@@ -26,19 +26,14 @@ export function SortableClipItem({
   };
 
   return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      className="w-64 shrink-0 touch-none"
-      {...attributes}
-      {...listeners}
-    >
+    <div ref={setNodeRef} style={style} className="w-64 shrink-0 touch-none">
       <TimelineClipCard
         clip={clip}
         isSelected={isSelected}
         isDragging={isDragging}
         onSelect={onSelect}
         onRemove={onRemove}
+        dragHandleProps={{ attributes, listeners }}
       />
     </div>
   );

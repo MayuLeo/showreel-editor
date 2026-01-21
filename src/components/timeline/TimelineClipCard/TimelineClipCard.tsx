@@ -1,6 +1,7 @@
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
+import { GripVertical } from 'lucide-react';
 import type { TimelineClipCardProps } from './type';
 
 const formatTimecode = (value: {
@@ -19,6 +20,7 @@ export function TimelineClipCard({
   isDragging = false,
   onSelect,
   onRemove,
+  dragHandleProps,
 }: TimelineClipCardProps) {
   const handleSelect = () => {
     onSelect?.(clip.id);
@@ -28,9 +30,7 @@ export function TimelineClipCard({
     <div
       className={cn(
         'rounded-md border bg-background p-3 transition-colors',
-        isDragging
-          ? 'opacity-50 border-primary'
-          : 'cursor-pointer hover:bg-accent/50',
+        isDragging ? 'opacity-50 border-primary' : 'hover:bg-accent/50',
         isSelected && !isDragging && 'bg-accent/30 border-primary'
       )}
       onClick={onSelect && !isDragging ? handleSelect : undefined}
@@ -45,7 +45,19 @@ export function TimelineClipCard({
       }}
     >
       <div className="flex items-start justify-between gap-2 mb-1">
-        <span className="text-sm font-medium leading-tight">{clip.name}</span>
+        <div className="flex items-center gap-2">
+          {dragHandleProps && (
+            <button
+              {...dragHandleProps.attributes}
+              {...dragHandleProps.listeners}
+              className="cursor-grab active:cursor-grabbing hover:bg-accent rounded p-0.5 -ml-1"
+              type="button"
+            >
+              <GripVertical className="w-4 h-4 text-muted-foreground" />
+            </button>
+          )}
+          <span className="text-sm font-medium leading-tight">{clip.name}</span>
+        </div>
         <Button
           size="sm"
           variant="ghost"

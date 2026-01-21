@@ -1,5 +1,5 @@
 import { Badge } from '@/components/ui/Badge';
-import { formatDuration } from '@/types/showreel';
+import { formatDuration } from '@/lib/timecode';
 import type { DurationDisplayProps } from './type';
 
 export function DurationDisplay({ duration }: DurationDisplayProps) {

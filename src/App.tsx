@@ -26,10 +26,9 @@ import type { ShowreelInfo, VideoFormat } from './types/showreel';
 function App() {
   // 入力（State）: name, format
   const [showreelName, setShowreelName] = useState('新規ファイル');
-  const [showreelFormat, setShowreelFormat] = useState<VideoFormat>({
-    standard: 'PAL',
-    resolution: 'HD',
-  });
+  const [showreelFormat, setShowreelFormat] = useState<VideoFormat | null>(
+    null
+  );
 
   const handleNameChange = (name: string) => {
     setShowreelName(name);
@@ -42,13 +41,13 @@ function App() {
 
   // 派生（Derived）: totalDuration は timelineClips から算出
   const totalDuration = useMemo(() => {
-    if (timelineClips.length === 0) {
+    if (timelineClips.length === 0 || !showreelFormat) {
       return { hours: 0, minutes: 0, seconds: 0, frames: 0 };
     }
     const fps = getFrameRate(showreelFormat.standard);
     const totalFrames = sumDurationFrames(timelineClips, fps);
     return framesToDuration(totalFrames, fps);
-  }, [timelineClips, showreelFormat.standard]);
+  }, [timelineClips, showreelFormat]);
 
   // Header へ渡す showreelInfo を合成
   const showreelInfo: ShowreelInfo = useMemo(
@@ -59,6 +58,7 @@ function App() {
     }),
     [showreelName, showreelFormat, totalDuration]
   );
+  console.log(showreelInfo);
 
   const addedClipIds = useMemo(
     () => new Set(timelineClips.map((clip) => clip.id)),
@@ -124,7 +124,14 @@ function App() {
   };
 
   const handleRemoveClip = (clipId: string) => {
-    setTimelineClips((prev) => prev.filter((clip) => clip.id !== clipId));
+    setTimelineClips((prev) => {
+      const newClips = prev.filter((clip) => clip.id !== clipId);
+      // タイムラインが空になったらフォーマットをリセット
+      if (newClips.length === 0) {
+        setShowreelFormat(null);
+      }
+      return newClips;
+    });
     setSelectedClipId((prev) => (prev === clipId ? undefined : prev));
   };
 

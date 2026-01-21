@@ -5,6 +5,6 @@ export type ClipLibraryPanelProps = {
   clips: Clip[];
   addedClipIds: Set<string>;
   isFormatLocked?: boolean;
-  lockedFormat?: VideoFormat;
+  lockedFormat?: VideoFormat | null;
   onAddClip?: (clipId: string) => void;
 };

@@ -1,5 +1,5 @@
 import type { VideoFormat } from '@/types/showreel';
 
 export type FormatSummaryProps = {
-  format: VideoFormat;
+  format: VideoFormat | null;
 };

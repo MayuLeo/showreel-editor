@@ -16,7 +16,7 @@ export type ClipCompatibility = {
  */
 export function getClipCompatibility(
   clip: Clip,
-  lockedFormat?: VideoFormat
+  lockedFormat?: VideoFormat | null
 ): ClipCompatibility {
   // ロックされていなければ常にOK
   if (!lockedFormat) {
@@ -45,9 +45,9 @@ export function getClipCompatibility(
 export function formatCompatibilityReasons(
   compatibility: ClipCompatibility,
   clip: Clip,
-  lockedFormat: VideoFormat
+  lockedFormat?: VideoFormat | null
 ): string {
-  if (compatibility.ok) {
+  if (compatibility.ok || !lockedFormat) {
     return '';
   }
 

@@ -72,3 +72,33 @@ export function sumDurationFrames(clips: Clip[], fps: number): number {
     return total + clipDurationFrames(clip, fps);
   }, 0);
 }
+
+/**
+ * デュレーションをフォーマット文字列に変換
+ * @param duration - Durationオブジェクト
+ * @returns "HH:MM:ss:ff" 形式の文字列
+ */
+export function formatDuration(duration: Duration): string {
+  const pad = (num: number, length: number = 2) =>
+    num.toString().padStart(length, '0');
+
+  return `${pad(duration.hours)}:${pad(duration.minutes)}:${pad(duration.seconds)}:${pad(duration.frames)}`;
+}
+
+/**
+ * 秒とフレームからDurationオブジェクトを作成
+ * @param totalSeconds - 総秒数
+ * @param frameRate - フレームレート（デフォルト25）
+ * @returns Durationオブジェクト
+ */
+export function createDuration(
+  totalSeconds: number,
+  frameRate: number = 25
+): Duration {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = Math.floor(totalSeconds % 60);
+  const frames = Math.round((totalSeconds % 1) * frameRate);
+
+  return { hours, minutes, seconds, frames };
+}

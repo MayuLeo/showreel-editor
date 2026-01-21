@@ -2,6 +2,7 @@ import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 import { useDraggable } from '@dnd-kit/core';
+import { GripVertical } from 'lucide-react';
 import type { ClipLibraryItemProps } from './type';
 
 const formatTimecode = (value: {
@@ -40,16 +41,26 @@ export function ClipLibraryItem({
       style={style}
       className={cn(
         'rounded-md border bg-background p-3 transition-colors',
-        isDragging && 'opacity-50 border-primary',
+        isDragging && 'opacity-0 pointer-events-none',
         disabled
           ? 'cursor-not-allowed opacity-50 bg-muted/30'
-          : 'cursor-grab hover:bg-accent/50 active:cursor-grabbing'
+          : 'hover:bg-accent/50'
       )}
-      {...listeners}
-      {...attributes}
     >
       <div className="flex items-start justify-between gap-2 mb-1">
-        <span className="text-sm font-medium leading-tight">{clip.name}</span>
+        <div className="flex items-center gap-2">
+          {!disabled && (
+            <button
+              {...listeners}
+              {...attributes}
+              className="cursor-grab active:cursor-grabbing hover:bg-accent rounded p-0.5 -ml-1"
+              type="button"
+            >
+              <GripVertical className="w-4 h-4 text-muted-foreground" />
+            </button>
+          )}
+          <span className="text-sm font-medium leading-tight">{clip.name}</span>
+        </div>
         <div className="flex items-center gap-1">
           {(isAdded || disabledReason) && (
             <Badge
